@@ -38,15 +38,19 @@ class QuestionsPage(Base):
         return self.questions[question_number - 1].click_question_link()
 
     def click_questions_done_tab(self):
+        self.wait_for_element_visible(*self._questions_done_tab_locator)
         self.selenium.find_element(*self._questions_done_tab_locator).click()
 
     def click_all_questions_tab(self):
+        self.wait_for_element_visible(*self._all_questions_tab_locator)
         self.selenium.find_element(*self._all_questions_tab_locator).click()
 
     def click_sort_by_unanswered_questions(self):
+        self.wait_for_element_visible(*self._sort_unanswered_locator)
         self.selenium.find_element(*self._sort_unanswered_locator).click()
 
     def click_sort_by_solved_questions(self):
+        self.wait_for_element_visible(*self._sort_solved_link_locator)
         self.selenium.find_element(*self._sort_solved_link_locator).click()
 
     def click_all_products(self):
@@ -77,6 +81,7 @@ class QuestionsPage(Base):
 
         @property
         def solved_questions_filter(self):
+            self.wait_for_element_visible(*self._solved_question_locator)
             return self._root_element.find_element(*self._solved_question_locator).get_attribute('class')
 
         @property
@@ -90,6 +95,7 @@ class QuestionsPage(Base):
         def click_question_link(self):
             question_title = self.title
             product_name = self.product_name
+            self.wait_for_element_visible(*self._question_link_locator)
             self._root_element.find_element(*self._question_link_locator).click()
             view_question_pg = ViewQuestionPage(self.testsetup)
             view_question_pg.is_the_current_page(question_title, product_name)
